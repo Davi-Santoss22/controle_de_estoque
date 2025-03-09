@@ -1,13 +1,78 @@
-# controle_de_estoque
-Trabalho realizado para a disciplina de linguagem de programação, etapa N2, do curso de Ciências da Computação no IFCE Tianguá.
+# Controle de Estoque em C
 
-Instruções: 
-Fazer um controle de estoque com os dados sendo salvos em arquivo, utilizando registros. Requisitos: 
+## Introdução
+Este projeto é um **sistema de controle de estoque** desenvolvido em linguagem C, que permite gerenciar produtos, registrando compras e vendas. Os dados são armazenados em um arquivo de texto (`estoque.txt`).
 
-1 - Deve conter um cadastro de produto.
+## Funcionalidades
+✅ Cadastro de produtos
+✅ Listagem dos produtos cadastrados
+✅ Registro de compras (entrada de estoque)
+✅ Registro de vendas (saída de estoque)
+✅ Atualização automática do estoque
 
-2 - Deve conter um cadastro de compras.
+## Estrutura do Programa
+O programa utiliza uma estrutura `struct` para representar um produto:
+```c
+typedef struct {
+    int codigo;
+    char nome[50];
+    int quantidade;
+    float preco;
+} Produto;
+```
+Cada produto possui **código, nome, quantidade e preço**, armazenados no arquivo `estoque.txt`.
 
-3 - Deve conter um cadastro das vendas.
+### 1. Cadastrar Produto
+Adiciona um novo produto ao arquivo `estoque.txt`.
+#### Exemplo de entrada:
+```plaintext
+Digite o código do produto: 1
+Nome do produto: Arroz
+Quantidade inicial: 10
+Preço do produto: 5.50
+```
 
-4 - Deve ter um controle de estoque.
+### 2. Listar Produtos
+Exibe todos os produtos cadastrados.
+#### Exemplo de saída:
+```plaintext
+Lista de Produtos:
+Código: 1 | Nome: Arroz | Quantidade: 10 | Preço: 5.50
+Código: 2 | Nome: Feijão | Quantidade: 5 | Preço: 6.20
+```
+
+### 3. Registrar Compra
+Aumenta a quantidade de um produto existente no estoque.
+#### Exemplo de entrada:
+```plaintext
+Código do produto: 1
+Quantidade comprada: 5
+```
+
+### 4. Registrar Venda
+Diminui a quantidade de um produto no estoque.
+#### Exemplo de entrada:
+```plaintext
+Código do produto: 1
+Quantidade vendida: 3
+```
+
+## Como Executar o Programa
+1. **Compilar** o programa com um compilador C, como `gcc`:
+   ```sh
+   gcc estoque.c -o estoque
+   ```
+2. **Executar** o programa:
+   ```sh
+   ./estoque
+   ```
+3. Utilizar o menu para interagir com o sistema.
+
+## Melhorias Futuras
+- Melhor tratamento de erros para evitar inconsistências nos dados.
+- Implementação de um formato JSON para facilitar a leitura do arquivo.
+- Uso de um banco de dados SQLite para maior escalabilidade.
+
+## Licença
+Este projeto está licenciado sob a [MIT License](LICENSE).
+
