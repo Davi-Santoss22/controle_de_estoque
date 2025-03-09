@@ -68,11 +68,3 @@ Quantidade vendida: 3
    ```
 3. Utilizar o menu para interagir com o sistema.
 
-## Melhorias Futuras
-- Melhor tratamento de erros para evitar inconsistências nos dados.
-- Implementação de um formato JSON para facilitar a leitura do arquivo.
-- Uso de um banco de dados SQLite para maior escalabilidade.
-
-## Licença
-Este projeto está licenciado sob a [MIT License](LICENSE).
-
