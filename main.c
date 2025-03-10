@@ -12,22 +12,46 @@ typedef struct {
 } Produto;
 
 void cadastrarProduto() {
-    FILE *arquivo_estoque = fopen("estoque.txt", "a");
+    FILE *arquivo_estoque = fopen("estoque.txt", "r");
     if (arquivo_estoque == NULL) {
-        printf("Erro ao abrir o arquivo!\n");
+        printf("Erro ao abrir o arquivo! Criando novo arquivo...\n");
+    }
+
+    Produto p, temp;
+    int codigo_existente = 0;
+
+    printf("Codigo do produto: ");
+    scanf("%d", &p.codigo);
+
+    // Verificar se o código já existe no arquivo
+    if (arquivo_estoque != NULL) {
+        while (fscanf(arquivo_estoque, "%d,%49[^,],%d,%f\n", &temp.codigo, temp.nome, &temp.quantidade, &temp.preco) == 4) {
+            if (temp.codigo == p.codigo) {
+                codigo_existente = 1;
+                break;
+            }
+        }
+        fclose(arquivo_estoque);
+    }
+
+    if (codigo_existente) {
+        printf("Erro: O código %d já está cadastrado!\n", p.codigo);
         return;
     }
 
-    Produto p;
-    
-    printf("Codigo do produto: ");
-    scanf("%d", &p.codigo);
+    // Prosseguir com o cadastro
     printf("Nome do produto: ");
     scanf(" %[^\n]", p.nome);
     printf("Quantidade inicial: ");
     scanf("%d", &p.quantidade);
-    printf("Preco do produto: ");
+    printf("Preço do produto: ");
     scanf("%f", &p.preco);
+
+    arquivo_estoque = fopen("estoque.txt", "a");
+    if (arquivo_estoque == NULL) {
+        printf("Erro ao abrir o arquivo para escrita!\n");
+        return;
+    }
 
     fprintf(arquivo_estoque, "%d,%s,%d,%.2f\n", p.codigo, p.nome, p.quantidade, p.preco);
     fclose(arquivo_estoque);
@@ -45,7 +69,7 @@ void listarProdutos() {
     
     printf("Lista de Produtos:\n");
     while (fscanf(arquivo_estoque, "%d,%49[^,],%d,%f\n", &p.codigo, p.nome, &p.quantidade, &p.preco) == 4) {
-        printf("Codigo: %d | Nome: %s | Quantidade: %d | Preco: %.2f\n",
+        printf("Codigo: %d | Nome: %s | Quantidade: %d | Preço: %.2f\n",
                p.codigo, p.nome, p.quantidade, p.preco);
     }
 
@@ -60,7 +84,7 @@ void registrarCompra() {
     }
 
     int codigo, quantidade;
-    printf("Codigo do produto: ");
+    printf("Código do produto: ");
     scanf("%d", &codigo);
     printf("Quantidade comprada: ");
     scanf("%d", &quantidade);
@@ -79,7 +103,7 @@ void registrarCompra() {
     fclose(arquivo_estoque);
 
     if (!encontrado) {
-        printf("Produto nao encontrado!\n");
+        printf("Produto não encontrado!\n");
         return;
     }
 
@@ -101,7 +125,7 @@ void registrarVenda() {
     }
 
     int codigo, quantidade;
-    printf("Codigo do produto: ");
+    printf("Código do produto: ");
     scanf("%d", &codigo);
     printf("Quantidade vendida: ");
     scanf("%d", &quantidade);
@@ -126,7 +150,7 @@ void registrarVenda() {
     fclose(arquivo_estoque);
 
     if (!encontrado) {
-        printf("Produto nao encontrado!\n");
+        printf("Produto não encontrado!\n");
         return;
     }
 
@@ -158,7 +182,7 @@ int main() {
             case 3: registrarCompra(); break;
             case 4: registrarVenda(); break;
             case 5: printf("Saindo...\n"); break;
-            default: printf("Opcao invalida!\n");
+            default: printf("Opção invalida!\n");
         }
     } while (opcao != 5);
 
