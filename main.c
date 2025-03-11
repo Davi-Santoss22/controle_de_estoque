@@ -46,7 +46,9 @@ void cadastrarProduto() {
     scanf("%d", &p.quantidade);
     printf("Preço do produto: ");
     scanf("%f", &p.preco);
-
+    
+    
+    //cria o arquivo estoque.txt caso ele não exista
     arquivo_estoque = fopen("estoque.txt", "a");
     if (arquivo_estoque == NULL) {
         printf("Erro ao abrir o arquivo para escrita!\n");
@@ -92,6 +94,8 @@ void registrarCompra() {
     Produto produtos[MAX_PRODUTOS];
     int count = 0, encontrado = 0;
 
+
+    //realiza a leitura do estoque.txt e salva na variável produtos
     while (fscanf(arquivo_estoque, "%d,%49[^,],%d,%f\n", &produtos[count].codigo, produtos[count].nome,
                   &produtos[count].quantidade, &produtos[count].preco) == 4) {
         if (produtos[count].codigo == codigo) {
@@ -107,6 +111,7 @@ void registrarCompra() {
         return;
     }
 
+    //reescreve o arquivo estoque.txt com as novas informações.
     arquivo_estoque = fopen("estoque.txt", "w");
     for (int i = 0; i < count; i++) {
         fprintf(arquivo_estoque, "%d,%s,%d,%.2f\n", produtos[i].codigo, produtos[i].nome,
@@ -133,6 +138,7 @@ void registrarVenda() {
     Produto produtos[MAX_PRODUTOS];
     int count = 0, encontrado = 0;
 
+    //realiza a leitura do estoque.txt e salva na variável produtos
     while (fscanf(arquivo_estoque, "%d,%49[^,],%d,%f\n", &produtos[count].codigo, produtos[count].nome,
                   &produtos[count].quantidade, &produtos[count].preco) == 4) {
         if (produtos[count].codigo == codigo) {
@@ -153,7 +159,9 @@ void registrarVenda() {
         printf("Produto não encontrado!\n");
         return;
     }
-
+    
+    
+    //reescreve o arquivo estoque.txt com as novas informações.
     arquivo_estoque = fopen("estoque.txt", "w");
     for (int i = 0; i < count; i++) {
         fprintf(arquivo_estoque, "%d,%s,%d,%.2f\n", produtos[i].codigo, produtos[i].nome,
